@@ -156,17 +156,18 @@ CreateCorrelatedSNPs<- function(tag.snp.name, snp.list, primary.server,
                 "1000 genomes data \n",
                 " please check this Tag SNP on the 1000 genomes browser: \n",
                 "http://browser.1000genomes.org/")
+    ### SP commented these out
+     #   stop("\n #### The Tag SNP ", tag.snp.name,
+     #        " seems to be unavailable from the current ",
+     #        "1000 genomes data \n",
+     #        " please check this Tag SNP on the 1000 genomes browser: \n",
+     #        "http://browser.1000genomes.org/")
+      } else {
       #  stop("\n #### The Tag SNP ", tag.snp.name,
       #       " seems to be unavailable from the current ",
-       #      "1000 genomes data \n",
-       #      " please check this Tag SNP on the 1000 genomes browser: \n",
-       #      "http://browser.1000genomes.org/")
-      } else {
-       # stop("\n #### The Tag SNP ", tag.snp.name,
-       #      " seems to be unavailable from the current ",
-       #      "1000 genomes data \n",
-       #      " please check this Tag SNP on the 1000 genomes browser: \n",
-       #      "http://browser.1000genomes.org/")
+      #       "1000 genomes data \n",
+      #       " please check this Tag SNP on the 1000 genomes browser: \n",
+      #       "http://browser.1000genomes.org/")
       }
     }
   }
@@ -303,6 +304,18 @@ getFSNPs <- function(snp.regions.file, bio.features.loc = NULL,
                                reduce.by.features=TRUE,
                                window.size=search.window,
                                par.threads=par.threads)
+
+        ### SP added. At present tag snps not found are simply ignored
+            tmp <- unlist(lapply(snp.list, function(x) is.null(x)))
+            if (any(tmp)) { 
+                cat(sprintf("%i tagSNPs threw errors; printing\n",
+                    sum(tmp)))
+                print(tag.snp.names[which(tmp)]) 
+                cat("**** IGNORING these and proceeding ****\n")
+                snp.list <- snp.list[-which(tmp)]
+                tag.snp.names <- tag.snp.names[-which(tmp)]
+
+             }
           names(snp.list) <- tag.snp.names
           snp.list <- TSList(snp.list)
           return(snp.list)
