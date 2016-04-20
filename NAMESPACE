@@ -1,0 +1,52 @@
+importFrom(IRanges, IRanges, sort, unlist)
+importFrom(rtracklayer, as.data.frame, import.bed)
+import(Rsamtools)
+import(methods)
+import(parallel)
+import(plyr)
+importFrom(snpStats, ld, row.summary, col.summary)
+#import(GGtools)
+import(TxDb.Hsapiens.UCSC.hg19.knownGene)
+import(ChIPpeakAnno)
+import(ggplot2)
+importFrom(VariantAnnotation, locateVariants, AllVariants, FiveUTRVariants, ThreeUTRVariants)
+importFrom(reshape, melt.data.frame, melt.array, melt.list, melt)
+import(scales)
+import(FunciSNP.data)
+
+exportMethods(
+    "alt.allele<-", "alt.allele",
+    "chr<-", "chr",
+    "correlated.snps<-", "correlated.snps",
+    "yafsnp.dprime<-", "yafsnp.dprime",
+    "genotype<-", "genotype",
+    "pop.genotype", "pop.genotype<-",
+    "overlapping.features<-", "overlapping.features",
+    "population<-", "population",
+    "position<-", "position",
+    "ref.allele<-", "ref.allele",
+    "yafsnp.rsq<-", "yafsnp.rsq",
+    "yafsnp.pvalue", "yafsnp.pvalue<-",
+    "snpid<-", "snpid"
+)
+
+exportClasses(CorrelatedSNPs, TagSNP, TSList)
+
+export(
+#functions
+    getFSNPs, FunciSNPAnnotateSummary, FunciSNPplot, FunciSNPbed, FunciSNPtable, FunciSNPsummaryOverlaps, FunciSNPidsFromSummary,
+#methods
+    "alt.allele<-", "alt.allele",
+    "chr<-", "chr",
+    "correlated.snps<-", "correlated.snps",
+    "yafsnp.dprime<-", "yafsnp.dprime",
+    "genotype<-", "genotype",
+    "pop.genotype", "pop.genotype<-",
+    "overlapping.features<-", "overlapping.features",
+    "population<-", "population",
+    "position<-", "position",
+    "ref.allele<-", "ref.allele",
+    "yafsnp.rsq<-", "yafsnp.rsq",
+    "yafsnp.pvalue", "yafsnp.pvalue<-",
+    "snpid<-", "snpid"
+    )
