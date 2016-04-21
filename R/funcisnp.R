@@ -305,6 +305,7 @@ getFSNPs <- function(snp.regions.file, bio.features.loc = NULL,
                                window.size=search.window,
                                par.threads=par.threads)
 
+
         ### SP added. At present tag snps not found are simply ignored
             tmp <- unlist(lapply(snp.list, function(x) is.null(x)))
             if (any(tmp)) { 
@@ -839,6 +840,14 @@ AnnotateSummary <- function(snp.list, verbose=TRUE) {
         } else{
 
                 summary.snp.list <- lapply(snp.list, SNPSummary)
+            ### SP added, condition when none of the SNPs overlaps anno
+            x <- unlist(sapply(summary.snp.list,is.null))
+            if (sum(x)==length(snp.list)) {
+                cat("None of the SNPs in the list overlaps annotation. Returning empty data.frame\n")
+                return(data.frame()) # cannot return null, validObject
+                                     # doesn't allow it
+            }
+            ### end addition
                 summary.snp.list <- summary.snp.list[!sapply(summary.snp.list, is.null)]
                 summary.snp.list <- IRanges::unlist(GRangesList(summary.snp.list))
 
